@@ -4,21 +4,83 @@
 // Ci saranno quindi 10 caselle per ognuna delle 10 righe.
 // Quando l'utente clicca su ogni cella, la cella cliccata si colora di azzurro ed emetto un messaggio in console con il numero della cella cliccata.
 
-const gridElements = document.querySelector("#grid");
-let squareNumber = 1;
+const playBtn = document.querySelector('#btn-play'); //dichiarazione variabile per indicare il bottone di play
+//console.log('Tasto di play:', playBtn);
+const delateBtn = document.querySelector('#btn-delate'); //dichiarazione variabile per indicare il bottone di annulla
+//console.log('Tasto di annulla:', delateBtn);
 
-// faccio una griglia 10 * 10 
+playBtn.addEventListener('click', function(){ //dichiarazione per indicare la funzione di click sul bottone
+    //console.log('Tasto premuto!');
+    gridCreate(); //richiamo la funzione della creazione del game-board
+})
 
-for(let i = 0; i < 100; i++) {
+delateBtn.addEventListener('click', function(){
+    //console.log('Tasto premuto!');
+    window.location.reload(); //funzione che ricarica la pagina HTML
+})
 
-    //creo 100 div che avranno come classe square 
-    const newElement = document.createElement("div");
-    newElement.classList.add("square");
-    console.log(newElement);
+/*
+* Funzione per indicare la selezione
+* del livello
+*/
 
-    //gli inserisco all'interno della griglia 
-    gridElements.append(newElement)
+function getLevel(){
+    const level = document.querySelector('#get-level').value; //dichiarazione variabile per indicare il livello scelto
+    //console.log('Valore:', level);
 
-    newElement.innerText = squareNumber;
-    squareNumber += 1;
+    return level;
+}
+
+/*
+* Funzione per indicare la creazione
+* della cella
+*/
+
+function cellsCreate(){
+    const cell = document.createElement('div'); //dichiarazione variabile che crea un <div></div>
+    //console.log('Creazione div:', cell);
+    cell.classList.add('cell'); //aggiunge all'elemento cella la classe: cell
+
+    return cell;
+}
+
+/*
+* Funzione per indicare la creazione
+* delle griglie
+*/
+
+function gridCreate(){
+    const grid = document.querySelector('#game-board'); //dichiarazione variabile per indicare la game-board
+    //console.log('Griglia:', grid);
+    const level = getLevel(); //dichiarazione variabile che riprende la funzione
+    //console.log('Livello scelto:', level);
+    let gridDimension = [ //dichiarazione array per indicare le celle presenti all'interno del game-board
+        100,
+        81,
+        49
+    ];
+    //console.log('Dimensioni game-boards:', gridDimension);
+    let totalCells = gridDimension[level - 1];
+    //console.log('Celle totali:', totalCells);
+    let rowCells = Math.sqrt(totalCells); //radice quadrata di un numero nell'array
+    //console.log('Radice quadrata:', rowCells);
+
+    /*
+    * Ciclo for per la creazione delle celle
+    * all'interno della griglia
+    */
+
+    for(let i = 0; i < totalCells; i++){
+        let cell = cellsCreate(i); //dichiarazione variabile che dipende dalla funzione
+        //console.log('Celle create:', cell);
+        cell.style.width = `calc(100% / ${rowCells})`; //modifichiamo la grandezza delle celle
+        cell.style.height = `calc(100% / ${rowCells})`; //modifichiamo l'altezza delle celle
+        cell.innerHTML= i+1;
+        grid.append(cell);
+
+        // aggiungo un event listener del click ad ogni cella
+        cell.addEventListener("click", function(){
+            console.log(this.innerHTML);
+        })
+    }
 }
