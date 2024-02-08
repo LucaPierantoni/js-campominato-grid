@@ -24,9 +24,11 @@ body {
     border: solid 1px rgb(255, 255, 255);
     color: white;
     font-weight: bold;
+    cursor: pointer;
 }
 
-.cell .clicked{
+.active{
     background-color: yellow;
+    color: black;
+    font-weight: bold;
 }
-

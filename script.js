@@ -79,8 +79,10 @@ function gridCreate(){
         grid.append(cell);
 
         // aggiungo un event listener del click ad ogni cella
-        cell.addEventListener("click", function(){
+        cell.addEventListener("click",function(event){
             console.log(this.innerHTML);
+            console.log(event.target);
+            event.target.classList.add("active");
         })
     }
 }
